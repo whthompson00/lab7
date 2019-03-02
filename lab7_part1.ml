@@ -18,66 +18,72 @@ files to complete all exercises:
  *)
 
 (*======================================================================
-Part 1: Implementing Modules
+  Part 1: Implementing Modules
 
-Modules are a way to package together and encapsulate types and values
-(including functions) into a single discrete unit.
+  Modules are a way to package together and encapsulate types and values
+  (including functions) into a single discrete unit.
 
-By applying a signature to a module, we guarantee that the module
-implements at least the values and functions defined within it. The
-module may also implement more as well, for internal use, but only
-those specified in the signature will be exposed and available outside
-the module definition.
+  By applying a signature to a module, we guarantee that the module
+  implements at least the values and functions defined within it. The
+  module may also implement more as well, for internal use, but only
+  those specified in the signature will be exposed and available outside
+  the module definition.
 
-Below is a MATH signature; we'll use it to describe a limited subset of
-functions and values that a mathematics module might contain.
-......................................................................*)
+  Below is a MATH signature; we'll use it to describe a limited subset of
+  functions and values that a mathematics module might contain.
+  ......................................................................*)
 
 module type MATH =
-  sig
-    (* the constant pi *)
-    val pi : float                        
-    (* cosine of an angle *)
-    val cos : float -> float
-    (* sine of an angle *)
-    val sin : float -> float 
-    (* sum of two numbers *)
-    val sum : float -> float -> float
-    (* maximum value in a list; None if list is empty *)
-    val max : float list -> float option
-  end ;;
+sig
+  (* the constant pi *)
+  val pi : float
+  (* cosine of an angle *)
+  val cos : float -> float
+  (* sine of an angle *)
+  val sin : float -> float
+  (* sum of two numbers *)
+  val sum : float -> float -> float
+  (* maximum value in a list; None if list is empty *)
+  val max : float list -> float option
+end ;;
 
-  (*......................................................................
-Exercise 1A: Complete the implementation of a module called Math that
-satisfies the signature above. (The value "nan" stands for "not a
-number" and is an actual value of the float type, as dictated by the
-IEEE Floating Point standard described at 
-<https://en.wikipedia.org/wiki/IEEE_754>. We're using it here as a
-temporary value pending your putting in appropriate ones.)
-......................................................................*)
+(*......................................................................
+  Exercise 1A: Complete the implementation of a module called Math that
+  satisfies the signature above. (The value "nan" stands for "not a
+  number" and is an actual value of the float type, as dictated by the
+  IEEE Floating Point standard described at
+  <https://en.wikipedia.org/wiki/IEEE_754>. We're using it here as a
+  temporary value pending your putting in appropriate ones.)
+  ......................................................................*)
 
 module Math : MATH =
-  struct
-    let pi = nan
-    let cos _ = nan
-    let sin _ = nan
-    let sum _ _ = nan
-    let max _ = None
-  end ;;
+struct
+  let pi = 4. *. (atan 1.)
+  let cos = cos
+  let sin = sin
+  let sum = (+.)
+  let max (lst : float list) =
+    match lst with
+    | [] -> None
+    | hd :: tl -> Some (List.fold_left max hd tl) ;;
+end ;;
 
 (*......................................................................
-Exercise 1B: Now that you've implemented the Math module, use it to
-compute the maximum of the cosine of pi and the sine of pi, a value of
-type float option. Name the resulting value "result". (Do not use a
-local open for this exercise.)
-......................................................................*)
+  Exercise 1B: Now that you've implemented the Math module, use it to
+  compute the maximum of the cosine of pi and the sine of pi, a value of
+  type float option. Name the resulting value "result". (Do not use a
+  local open for this exercise.)
+  ......................................................................*)
 
-let result = Some nan ;;
+let result : float option=
+  Math.max [(Math.sin Math.pi); (Math.cos Math.pi)];;
 
 (*......................................................................
-Exercise 1C: Reimplement the computation from 1B above, now as
-"result_local_open", but using a local open to write your computation
-in a more succinct manner.
-......................................................................*)
+  Exercise 1C: Reimplement the computation from 1B above, now as
+  "result_local_open", but using a local open to write your computation
+  in a more succinct manner.
+  ......................................................................*)
 
-let result_local_open = Some nan ;;
+let result_local_open : float option =
+  let open Math in
+  max [(sin pi); (cos pi)];;
