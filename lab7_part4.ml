@@ -107,4 +107,4 @@ function, above, and pull the top element from it, naming the result
 top_el.
 ......................................................................*)
 
-let top_el () : string = Stack.top (s ());;
+let top_el : string = Stack.top (s ());;
