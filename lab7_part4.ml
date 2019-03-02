@@ -99,7 +99,7 @@ let s () =
   empty
   |> push "Computer"
   |> push "Science"
-  |> "51" ;;
+  |> push "51" ;;
 
 (*......................................................................
 Exercise 4C: Write an expression to generate a stack with the s

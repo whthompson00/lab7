@@ -97,7 +97,7 @@ Exercise 3C: Now, use IntListStack functions to write an expression that
 defines last_el as the value of the topmost element from small_stack.
 ......................................................................*)
 
-let last_el = IntListStack.top (small_stack);;
+let last_el () = IntListStack.top (small_stack);;
 
 (* Based on our requirements above, what should last_el contain?
 
@@ -127,7 +127,7 @@ top value from a small_stack inverted with invert_stack and name the
 result in bad_el.
 ......................................................................*)
 
-let bad_el = IntListStack.top (invert_stack (small_stack));;
+let bad_el () = IntListStack.top (invert_stack (small_stack));;
 
 (* This is bad. We have broken through the *abstraction barrier*
 defined by the IntListStack module. You may wonder: "if I know that
